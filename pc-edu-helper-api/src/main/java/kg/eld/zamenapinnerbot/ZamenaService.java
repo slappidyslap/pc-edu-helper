@@ -43,7 +43,7 @@ public class ZamenaService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
+                continue;
                 /*try {
                     bot.execute(SendMessage
                             .builder()

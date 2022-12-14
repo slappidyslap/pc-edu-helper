@@ -40,6 +40,13 @@ app.on('window-all-closed', () => {
   }
 });
 
+app.on('web-contents-created', (createEvent, contents) => {
+  
+  contents.on('new-window', event => {
+    event.preventDefault();
+  });
+})
+
 // when app activates, open a window
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {

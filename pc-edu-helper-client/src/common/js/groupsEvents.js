@@ -30,7 +30,7 @@ import {
 import { groupsDiv, allAudienceInputs, allTeacherInputs } from "./singletons"
 
 const IF_EXISTS_ERROR_TEXT = 'Исправьте ошибки';
-const API_URL = process.env.PC_EDU_HELPER_API_URL;
+const API_URL = 'https://pc-edu-helper-api.onrender.com'
 
 export function registerMainListeners() {
     groupsDiv.addEventListener("change", onChangeInput)
@@ -49,7 +49,7 @@ export function registerMainListeners() {
         else if (target.closest('#exportTimeTableBtn')) onClickExportTimeTableBtn()
         else if (event.altKey) {
             if (target.closest('#exportTimeTableBtn')) onClickExportTimeTableBtn()
-            else if (target.closest('#changeModeBtn')) onClickChangeModeBtn()
+            else if (target.closest('#changeModeBtn')) onClickChangeModeBtn(event)
             else if (target.closest('#exportZamenaBtn')) onClickExportZamenaBtn()
         }
     })
@@ -142,7 +142,7 @@ const onClickChangeModeBtn = (event) => {
             return Array.from(children).slice(1)
         })
         .flatMap(el => el)
-    const target = event.target
+    const target = event.target;
     if (target.innerText == 'В "Замена" режим') {
         hideWeeks(weeks)
         target.innerText = 'В "Обычный" режим'
