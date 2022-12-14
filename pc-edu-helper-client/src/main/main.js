@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
+const { spawnSync } = require("child_process");
 
 // get environment type
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -13,7 +14,7 @@ const openWindow = () => {
     },
   });
   // Это какой-то костыль, portable версия не запускается иначе
-  if (isDevelopment) win.setIcon(path.join(__dirname, '..', 'static', 'icon.ico')); 
+  if (isDevelopment) win.setIcon(path.join(__dirname, '..', 'static', 'icon.ico'));
   win.setTitle("PC EDU Helper")
   win.maximize()
   win.removeMenu()
@@ -29,8 +30,6 @@ const openWindow = () => {
 
 // when app is ready, open a window
 app.on('ready', () => {
-  if (!process.env.PC_EDU_HELPER_API_URL)
-    process.env.PC_EDU_HELPER_API_URL = 'https://render-spring-demo.onrender.com'
   openWindow();
 });
 

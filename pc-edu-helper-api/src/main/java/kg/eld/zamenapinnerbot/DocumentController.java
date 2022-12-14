@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", originPatterns = "*")
 @RequiredArgsConstructor
 public class DocumentController {
 
