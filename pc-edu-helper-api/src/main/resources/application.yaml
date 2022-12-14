@@ -1,0 +1,14 @@
+telegram:
+  api-url: https://api.telegram.org/
+  bot-name: ${BOT_NAME}
+  bot-token: ${BOT_TOKEN}
+  webhook-path: ${WEBHOOK_PATH}
+  bot-username: ${BOT_USERNAME}
+
+server:
+  port: ${SERVER_PORT}
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}

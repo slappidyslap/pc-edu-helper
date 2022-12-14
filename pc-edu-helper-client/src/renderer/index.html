@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+</head>
+
+<body>
+    <datalist id="subjects">
+        <option value="Математика" />
+        <option value="КСЕ" />
+        <option value="ОСС" />
+        <option value="Комп. графика" />
+        <option value="Русский язык" />
+        <option value="Кырг. язык" />
+        <option value="Кырг.язык и лит-ра" />
+        <option value="НЕТ" />
+    </datalist>
+    <datalist id="teachers">
+        <option value="Усупова Г.У." />
+        <option value="Эсентурова А.Ж." />
+        <option value="Абдрахманова Д.Д." />
+        <option value="Иманалиев Т.И." />
+        <option value="Молдошова Г.М." />
+        <option value="Бубнева В.Б." />
+        <option value="Искендерова С.И." />
+        <option value="НЕТ" />
+    </datalist>
+    <datalist id="to-variants">
+        <option value="1 пд">
+        <option value="2 пд">
+        <option value="лк">
+    </datalist>
+    <nav class="navbar navbar-light sticky-top bg-light">
+        <div class="container d-flex justify-content-center gap-3">
+            <div id="filters" class="d-flex justify-content-center gap-3">
+                <div>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="groupYear">
+                        <option selected value="-1">Все</option>
+                        <option value="0">1 курс</option>
+                        <option value="1">2 курс</option>
+                        <option value="2">3 курс</option>
+                    </select>
+                </div>
+                <div>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="groupName">
+                        <option selected value=".+">Все</option>
+                        <option value="ПКС">ПКС</option>
+                        <option value="КС">КС</option>
+                        <option value="ЭССС">ЭССС</option>
+                        <option value="ЭкСС">ЭкСС</option>
+                        <option value="СССК">СССК</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <input class="form-control form-select-sm" type="date" id="setDateZamenaInput">
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Опции
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" id="preShowZamenaBtn">Предварительный просмотр замены</a></li>
+                    <li><a class="dropdown-item" href="#" id="generateAnalyzeBtn" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">Провести анализ</a></li>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#" id="saveBtn">Сохранить</a></li>
+                    <li><a class="dropdown-item" href="#">
+                            <label>
+                                <input type="file" id="loadInput" style="display: none;" accept="application/json">
+                                <span>Загрузить</span>
+                            </label>
+                        </a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#" id="changeModeBtn" title="Alt + ЛКМ">В "Замена" режим</a></li>
+                    <li><a class="dropdown-item" href="#" id="exportTimeTableBtn" title="Alt + ЛКМ">Экспорт расписания</a></li>
+                    <li><a class="dropdown-item" href="#" id="exportZamenaBtn" title="Alt + ЛКМ">Экспорт замены</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Анализ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="analyzeModalContent">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="groups">
+
+        </div>
+    </div>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999">
+        <div class="toast align-items-center hide" id="mainToast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex justify-content-between">
+                <div class="toast-body" style="font-size: 1.1rem;">
+                </div>
+                <div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-xl fade" id="serverErrorModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">О нет ошибка!</h5>
+            </div>
+            <div class="modal-body" id="serverErrorModalContent">
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" id="sendServerErrorBtn">Отправить репорт</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+
+</html>
+
+</html>
