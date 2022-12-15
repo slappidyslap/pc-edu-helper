@@ -28,6 +28,7 @@ import java.util.function.Predicate;
 public class DocumentService {
 
     private static final BaseFont baseFont;
+    private static final BaseColor borderColor = new BaseColor(157, 22, 22);
 
     static {
         try {
@@ -84,7 +85,6 @@ public class DocumentService {
             for (String groupName : json.keySet()) {
                 PdfPTable table = new PdfPTable(new float[]{10, 90});
                 PdfPCell groupCell = getGroupCell(groupName, false);
-                groupCell.setColspan(2);
                 table.addCell(groupCell);
 
                 for (int weekNum = 0; weekNum < 5; weekNum++) {
@@ -104,15 +104,18 @@ public class DocumentService {
                             }
                         }
                         PdfPCell innerTableCell = new PdfPCell(lessonsRow);
+                        innerTableCell.setBorderColor(borderColor);
 
                         innerTable.addCell(innerTableCell);
                     }
                     PdfPCell tableCell = new PdfPCell(innerTable);
+                    tableCell.setBorderColor(borderColor);
                     tableCell.setPadding(0);
                     table.addCell(tableCell);
                 }
                 table.setWidthPercentage(table.getWidthPercentage() - 10);
                 PdfPCell outerTableCell = new PdfPCell(table);
+                outerTableCell.setBorderColor(borderColor);
                 outerTable.addCell(outerTableCell); // 2 col
             }
             outerTable.completeRow();
@@ -136,7 +139,7 @@ public class DocumentService {
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setRotation(90);
         cell.setUseAscender(true);
-
+        cell.setBorderColor(borderColor);
         Chunk chunk = new Chunk(weekName);
         chunk.setFont(new Font(baseFont, 12, Font.BOLD));
 
@@ -152,6 +155,7 @@ public class DocumentService {
         PdfPCell cell = new PdfPCell();
         cell.setUseAscender(true);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
+        cell.setBorderColor(borderColor);
         Paragraph paragraph = getTextCenteredParagraph(lessonNumStr, true, 10);
         paragraph.setAlignment(Paragraph.ALIGN_CENTER);
         cell.addElement(paragraph);
@@ -213,6 +217,7 @@ public class DocumentService {
         cell.setUseAscender(true);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.addElement(getTextCenteredParagraph(inputText, false, -1));
+        cell.setBorderColor(borderColor);
         return cell;
     }
 
@@ -223,6 +228,7 @@ public class DocumentService {
             cell.setUseAscender(true);
             cell.setPaddingBottom(5);
             cell.setPaddingTop(5);
+            cell.setBorderColor(borderColor);
             if (lesson.getType().equals("black")) cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
             Chunk chunk = new Chunk(lesson.toString().trim());
             chunk.setFont(new Font(baseFont, 11));
@@ -255,6 +261,7 @@ public class DocumentService {
         cell.setUseAscender(true);
         cell.setColspan(isZamena ? 4 : 2);
         cell.addElement(paragraph);
+        cell.setBorderColor(borderColor);
         return cell;
     }
 

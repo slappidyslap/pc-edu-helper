@@ -78,8 +78,8 @@ const onClickExportZamenaBtn = async () => {
     if (response.ok) hideToast();
     if (isClientOrServerError(response.status)) {
         const json = await response.json();
-        console.error(json.trace);
-        showServerErrorModal(json.trace);
+        console.error(json.message);
+        showServerErrorModal(json.message);
         hideToast();
     }
 }
@@ -113,8 +113,8 @@ const onClickExportTimeTableBtn = async () => {
             downloadBlob(blob, name);
         } else {
             const json = await response.json();
-            console.error(json.trace);
-            serverErrorsString += `\n${i + 1} курс:\n${json.trace}`;
+            console.error(json.message);
+            serverErrorsString += `\n${i + 1} курс:\n${json.message}`;
         }
         if (serverErrorsString) showServerErrorModal(serverErrorsString);
         hideToast();
@@ -143,8 +143,8 @@ const onClickPreShowZamenaBtn = async () => {
         hideToast();
     } else {
         const json = await response.json();
-        console.error(json.trace);
-        showServerErrorModal(json.trace);
+        console.error(json.message);
+        showServerErrorModal(json.message);
         hideToast();
     }
 }
