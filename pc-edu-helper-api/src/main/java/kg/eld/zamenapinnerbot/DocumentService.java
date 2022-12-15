@@ -159,7 +159,9 @@ public class DocumentService {
     }
 
     private Resource documentDecorator(String title, Function<Document, Element> function) {
-
+        if (title == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "the title is null");
+        }
         boolean isZamena = title.contains("ЗАМЕНА");
         if (isZamena)
             log.info("Пришел новый снимок замены");
