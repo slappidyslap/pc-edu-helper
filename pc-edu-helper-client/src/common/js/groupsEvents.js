@@ -90,11 +90,10 @@ const onClickExportTimeTableBtn = async () => {
     const data = timeTableDataToObject().data;
     const isTodayAfterOrEqualsSep = isTodayAfterOrEqualsSeptember();
     const currentYear = new Date().getFullYear() % 100;
-
+    let serverErrorsString = '';
     [0, 1, 2].forEach(async (i) => {
 
-        showToast(`Загрузка ${i} - курса...`, true);
-
+        showToast(`Загрузка ${i + 1} - курса...`, true);
         const groupData = Object.fromEntries(
             Object.entries(data).filter(([key]) => {
                 const groupYear = getYearByGroupName(key)
@@ -109,15 +108,16 @@ const onClickExportTimeTableBtn = async () => {
             body: JSON.stringify({ data: groupData, name })
         })
         if (response.ok) {
+            
             const blob = await response.blob();
             downloadBlob(blob, name);
-            hideToast();
         } else {
             const json = await response.json();
             console.error(json.trace);
-            showServerErrorModal(json.trace);
-            hideToast();
+            serverErrorsString += `\n${i + 1} курс:\n${json.trace}`;
         }
+        if (serverErrorsString) showServerErrorModal(serverErrorsString);
+        hideToast();
     })
 }
 
