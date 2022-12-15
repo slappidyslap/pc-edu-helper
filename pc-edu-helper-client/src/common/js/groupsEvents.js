@@ -70,11 +70,19 @@ const onClickExportZamenaBtn = async () => {
         setTimeout(() => { hideToast() }, 3000)
         return;
     }
-    const response = await fetch(`${API_URL}/zamena`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, data: zamenaObject })
-    })
+    let response;
+    try {
+        response = await fetch(`${API_URL}/zamena`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, data: zamenaObject })
+        })
+    } catch (error) {
+        console.error(`${process.env['API_URL']} - ${error}`);
+        showToast(error);
+        setTimeout(() => { hideToast() }, 5000)
+        throw Error(error);
+    }
     if (response.ok) hideToast();
     if (isClientOrServerError(response.status)) {
         const json = await response.json();
@@ -102,13 +110,21 @@ const onClickExportTimeTableBtn = async () => {
             })
         )
         const name = `Расписание ${i + 1} курс`
-        const response = await fetch(`${API_URL}/documents/time-table`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ data: groupData, name })
-        })
+        let response;
+        try {
+            response = await fetch(`${API_URL}/documents/time-table`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: groupData, name })
+            })
+        } catch (error) {
+            console.error(`${process.env['API_URL']} - ${error}`);
+            showToast(error);
+            setTimeout(() => { hideToast() }, 5000)
+            throw Error(error);
+        }
         if (response.ok) {
-            
+
             const blob = await response.blob();
             downloadBlob(blob, name);
         } else {
@@ -123,7 +139,7 @@ const onClickExportTimeTableBtn = async () => {
 
 const onClickPreShowZamenaBtn = async () => {
     showToast("Предварительный просмотр...", true);
-    
+
     const timeTableObject = timeTableDataToObject(); // todo сразу в замену
     const zamenaObject = timeTableToZamena(timeTableObject.data)
     const name = getFormattedHeader()
@@ -132,11 +148,19 @@ const onClickPreShowZamenaBtn = async () => {
         setTimeout(() => { hideToast() }, 3000)
         return;
     }
-    const response = await fetch(`${API_URL}/documents/zamena`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, data: zamenaObject })
-    })
+    let response;
+    try {
+        response = await fetch(`${API_URL}/documents/zamena`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, data: zamenaObject })
+        })
+    } catch (error) {
+        console.error(`${process.env['API_URL']} - ${error}`);
+        showToast(error);
+        setTimeout(() => { hideToast() }, 5000)
+        throw Error(error);
+    }
     if (response.ok) {
         const blob = await response.blob();
         downloadBlob(blob, name);
@@ -171,7 +195,7 @@ const onClickChangeModeBtn = (event) => {
     }
 }
 
-const onСhangeLoadInput = (event) => {    
+const onСhangeLoadInput = (event) => {
     showToast("Загружаем...", true)
     resetTimeTable() // todo
     const reader = new FileReader();
