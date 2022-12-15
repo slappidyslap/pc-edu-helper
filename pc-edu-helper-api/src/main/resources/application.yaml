@@ -7,8 +7,8 @@ telegram:
 
 server:
   port: ${SERVER_PORT}
-
-spring:
+  error:
+    include-message: always
   data:
     mongodb:
       uri: ${MONGODB_URI}

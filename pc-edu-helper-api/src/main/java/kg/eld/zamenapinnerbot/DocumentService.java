@@ -179,7 +179,7 @@ public class DocumentService {
             try {
                 element = function.apply(document);
             } catch (NullPointerException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Arrays.toString(e.getStackTrace()));
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
             }
             document.add(element);
 
@@ -231,7 +231,7 @@ public class DocumentService {
             cell.addElement(paragraph);
             return cell;
         } catch (Exception e) { //
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Arrays.toString(e.getStackTrace()));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
