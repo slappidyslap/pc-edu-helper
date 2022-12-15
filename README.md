@@ -1,15 +1,13 @@
-()[https://webpack.electron.build]
+## Что это?
 
-https://medium.com/jspoint/creating-a-react-based-electron-application-with-electron-webpack-c33817a6ddc
+PC EDU Helper - это проект созданный для колледжа в целях облегчение и упрощение доставки, создания, распространения замен и расписаний.
 
-https://github.com/PaulLeCam/react-leaflet/issues/883
+Деятельность человека и использование дорогих бумаг сведено до минимума. Старостам и учителям больше нет необходимости отправлять, закреплять замены и предупреждать однокурсников при входящих замен.
 
-,
-    "afterPack": "./setEnvAfterBuild.js"
-    "nsis": {
-      "installerIcon": "icon.ico",
-      "uninstallerIcon": "icon.ico",
-      "uninstallDisplayName": "pc edu helper",
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
-    }
+Презентация: https://slides.com/eld/minimal
+
+## Содействие в разработку проекта
+...
+
+## Отдельное спасибо
+Азиму, который внёс эту идею
