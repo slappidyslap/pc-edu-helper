@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 @RestController
-@CrossOrigin(origins = "*", originPatterns = "*")
+@CrossOrigin(originPatterns = "*")
 @RequiredArgsConstructor
 public class TelegramController {
 

@@ -9,11 +9,14 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -170,8 +173,12 @@ public class DocumentService {
 
             document.add(getTitleParagraph(title));
             addSpacing(document);
-
-            Element element = function.apply(document);
+            Element element;
+            try {
+                element = function.apply(document);
+            } catch (NullPointerException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Arrays.toString(e.getStackTrace()));
+            }
             document.add(element);
 
             document.close();
@@ -208,18 +215,22 @@ public class DocumentService {
     }
 
     private PdfPCell formatTextForTimeTable(Lesson lesson) {
-        PdfPCell cell = new PdfPCell();
-        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setUseAscender(true);
-        cell.setPaddingBottom(5);
-        cell.setPaddingTop(5);
-        if (lesson.getType().equals("black")) cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-        Chunk chunk = new Chunk(lesson.toString().trim());
-        chunk.setFont(new Font(baseFont, 11));
-        Paragraph paragraph = new Paragraph(chunk);
-        paragraph.setIndentationLeft(3);
-        cell.addElement(paragraph);
-        return cell;
+        try {
+            PdfPCell cell = new PdfPCell();
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setUseAscender(true);
+            cell.setPaddingBottom(5);
+            cell.setPaddingTop(5);
+            if (lesson.getType().equals("black")) cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            Chunk chunk = new Chunk(lesson.toString().trim());
+            chunk.setFont(new Font(baseFont, 11));
+            Paragraph paragraph = new Paragraph(chunk);
+            paragraph.setIndentationLeft(3);
+            cell.addElement(paragraph);
+            return cell;
+        } catch (Exception e) { //
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Arrays.toString(e.getStackTrace()));
+        }
     }
 
     private Paragraph getTextCenteredParagraph(String inputText, boolean isToSetBold, int fontSize) {
