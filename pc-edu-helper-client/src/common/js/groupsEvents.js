@@ -12,7 +12,7 @@ import {
     timeTableDataToObject,
     isExistErrors,
     saveTimeTableAsJsonFile,
-    newToast,
+    showToast,
     hideWeeks,
     showWeeks,
     saveZamenaAsJsonFile,
@@ -25,12 +25,14 @@ import {
     isTodayAfterOrEqualsSeptember,
     getYearByGroupName,
     showServerErrorModal,
+    hideToast,
+    isClientOrServerError,
 } from "./utils"
 
 import { groupsDiv, allAudienceInputs, allTeacherInputs } from "./singletons"
 
 const IF_EXISTS_ERROR_TEXT = 'Исправьте ошибки';
-const API_URL = 'https://pc-edu-helper-api.onrender.com'
+const API_URL = process.env['API_URL'];
 
 export function registerMainListeners() {
     groupsDiv.addEventListener("change", onChangeInput)
@@ -46,11 +48,11 @@ export function registerMainListeners() {
         if (target.closest('#generateAnalyzeBtn')) onClickGenerateAnalyzeBtn(event)
         else if (target.closest('#saveBtn')) onClickSaveBtn();
         else if (target.closest('#preShowZamenaBtn')) onClickPreShowZamenaBtn()
-        else if (target.closest('#exportTimeTableBtn')) onClickExportTimeTableBtn()
         else if (event.altKey) {
             if (target.closest('#exportTimeTableBtn')) onClickExportTimeTableBtn()
-            else if (target.closest('#changeModeBtn')) onClickChangeModeBtn(event)
+            else if (target.closest('#exportTimeTableBtn')) onClickExportTimeTableBtn()
             else if (target.closest('#exportZamenaBtn')) onClickExportZamenaBtn()
+            else if (target.closest('#changeModeBtn')) onClickChangeModeBtn(event)
         }
     })
 
@@ -58,11 +60,14 @@ export function registerMainListeners() {
 }
 
 const onClickExportZamenaBtn = async () => {
+    showToast("Экспорт замены...", true);
+
     const timeTableObject = timeTableDataToObject(); // todo сразу в замену
     const zamenaObject = timeTableToZamena(timeTableObject.data)
     const name = getFormattedHeader()
     if (name.includes('undefined')) {
-        newToast('Выберете дату');
+        showToast('Выберете дату', false);
+        setTimeout(() => { hideToast() }, 3000)
         return;
     }
     const response = await fetch(`${API_URL}/zamena`, {
@@ -70,18 +75,25 @@ const onClickExportZamenaBtn = async () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, data: zamenaObject })
     })
-    if (response.status <= 499 && response.status >= 400) {
+    if (response.ok) hideToast();
+    if (isClientOrServerError(response.status)) {
         const json = await response.json();
         console.error(json.trace);
         showServerErrorModal(json.trace);
+        hideToast();
     }
 }
 
 const onClickExportTimeTableBtn = async () => {
+    showToast("Экспорт расписания...", true);
+
     const data = timeTableDataToObject().data;
     const isTodayAfterOrEqualsSep = isTodayAfterOrEqualsSeptember();
     const currentYear = new Date().getFullYear() % 100;
+
     [0, 1, 2].forEach(async (i) => {
+
+        showToast(`Загрузка ${i} - курса...`, true);
 
         const groupData = Object.fromEntries(
             Object.entries(data).filter(([key]) => {
@@ -96,23 +108,28 @@ const onClickExportTimeTableBtn = async () => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ data: groupData, name })
         })
-        if (response.status == 200) {
+        if (response.ok) {
             const blob = await response.blob();
             downloadBlob(blob, name);
+            hideToast();
         } else {
             const json = await response.json();
             console.error(json.trace);
             showServerErrorModal(json.trace);
+            hideToast();
         }
     })
 }
 
 const onClickPreShowZamenaBtn = async () => {
+    showToast("Предварительный просмотр...", true);
+    
     const timeTableObject = timeTableDataToObject(); // todo сразу в замену
     const zamenaObject = timeTableToZamena(timeTableObject.data)
     const name = getFormattedHeader()
     if (name.includes('undefined')) {
-        newToast('Выберете дату');
+        showToast('Выберете дату', false);
+        setTimeout(() => { hideToast() }, 3000)
         return;
     }
     const response = await fetch(`${API_URL}/documents/zamena`, {
@@ -120,13 +137,15 @@ const onClickPreShowZamenaBtn = async () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, data: zamenaObject })
     })
-    if (response.status == 200) {
+    if (response.ok) {
         const blob = await response.blob();
         downloadBlob(blob, name);
+        hideToast();
     } else {
         const json = await response.json();
         console.error(json.trace);
         showServerErrorModal(json.trace);
+        hideToast();
     }
 }
 
@@ -152,10 +171,12 @@ const onClickChangeModeBtn = (event) => {
     }
 }
 
-const onСhangeLoadInput = (event) => {
+const onСhangeLoadInput = (event) => {    
+    showToast("Загружаем...", true)
     resetTimeTable() // todo
     const reader = new FileReader();
     reader.onload = (event) => {
+
         const loadedTimeTable = JSON.parse(event.target.result)
         const changeModeBtn = document.querySelector('#changeModeBtn');
         console.log(changeModeBtn.innerText == 'В "Замена" режим')
@@ -166,17 +187,20 @@ const onСhangeLoadInput = (event) => {
             loadZamenaFromJson(loadedTimeTable)
     }
     reader.onerror = (error) => {
-        newToast(error)
+        showToast(error, false)
     }
     reader.readAsText(event.target.files[0])
     event.target.value = null
-
+    hideToast()
 }
 
 const onClickSaveBtn = () => {
+    showToast("Сохраняем...", true)
+
     if (isExistErrors()) {
         console.debug('Найдены дубликаты')
-        newToast(IF_EXISTS_ERROR_TEXT)
+        showToast(IF_EXISTS_ERROR_TEXT, false)
+        setTimeout(() => { hideToast() }, 3000)
         return;
     }
     const timeTableObject = timeTableDataToObject();
@@ -184,8 +208,8 @@ const onClickSaveBtn = () => {
     console.dir(timeTableObject)
     if (changeModeBtn.innerText == 'В "Замена" режим')
         saveTimeTableAsJsonFile(timeTableObject.data)
-    else
-        saveZamenaAsJsonFile(timeTableObject.data)
+    else saveZamenaAsJsonFile(timeTableObject.data)
+    hideToast()
 }
 // todo checksum
 const onClickGenerateAnalyzeBtn = () => {

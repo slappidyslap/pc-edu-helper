@@ -318,12 +318,17 @@ export function timeTableDataToObject() {
     return result;
 }
 
-export function newToast(text) {
-    const toastElement = document.getElementById('mainToast')
-    const bsToast = new Toast(toastElement)
-    toastElement.firstElementChild.firstElementChild.innerText = text
-    bsToast.show();
+export function showToast(text, showSpinner) {
+    const toastElement = document.querySelector('#mainToast') // Мне необходимо, чтобы оно была показана сколько надо (иначе автоматически скрывается)
+    toastElement.classList.add('show')
+    if (showSpinner) toastElement.querySelector('.spinner-border').classList.remove('d-none');
+    else toastElement.querySelector('.spinner-border').classList.add('d-none');
+    toastElement.querySelector('#mainToastContent').innerText = text;
+}
 
+export function hideToast() {
+    const toastElement = document.querySelector('#mainToast')
+    toastElement.classList.remove('show')
 }
 
 export function hideWeeks(arrayOfElement) {
@@ -390,7 +395,8 @@ export function loadZamenaFromJson(loadedData) {
             }
         }
     } catch (error) {
-        newToast(FAIL_LOAD_ZAMENA)
+        showToast(FAIL_LOAD_ZAMENA);
+        setTimeout(() => { hideToast() }, 3000)
     }
 }
 
@@ -426,8 +432,13 @@ export function loadTimeTableFromJson(loadedTimeTable) {
             }
         }
     } catch (error) {
-        newToast(FAIL_LOAD_TIME_TABLE)
+        showToast(FAIL_LOAD_TIME_TABLE)
+        setTimeout(() => { hideToast() }, 3000)
     }
+}
+
+export function isClientOrServerError(status) {
+    return (status <= 499 && status >= 400) || (status <= 599 && status >= 500)
 }
 
 /* export function onReady(func) {
