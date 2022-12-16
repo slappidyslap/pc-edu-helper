@@ -8,6 +8,8 @@ import {
 } from './utils'
 import { groupsDiv } from './singletons'
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 export function fill() {
     const currentYear = parseInt(new Date().getFullYear().toString().slice(2))
     const isTodayAfterSep = isTodayAfterOrEqualsSeptember()
@@ -51,7 +53,9 @@ export function fill() {
     generateKs()
     generateEsss()
 
-    const allGroupsArray = [...pksAndKsGroups]
+    let allGroupsArray;
+    if (!isDevelopment) allGroupsArray = [...pksAndKsGroups, ...ekssAndSsskGroups, ...esssGroups]
+    else allGroupsArray = [...pksAndKsGroups] // Выставляйте какие группы должны генерироваться
 
     allGroupsArray.forEach(groupName => {
         groupsDiv.insertAdjacentHTML('beforeend', getGroupTemplate(groupName))
