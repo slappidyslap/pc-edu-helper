@@ -18,9 +18,9 @@ const openWindow = () => {
   // Это какой-то костыль, portable версия не запускается иначе
   if (isDevelopment) win.setIcon(join(__dirname, '..', 'static', 'icon.ico'));
   win.setTitle("PC EDU Helper")
-  win.maximize()
   win.removeMenu()
   if (isDevelopment) win.webContents.openDevTools();
+  /* win.maximize() */
 
   // load HTML file
   if (isDevelopment) {
