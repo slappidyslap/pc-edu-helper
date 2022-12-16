@@ -8,9 +8,9 @@
         <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>kg.eld</groupId>
+    <groupId>kg.musabaev</groupId>
     <artifactId>zamena-pinner-bot</artifactId>
-    <version>1.1</version>
+    <version>1.0</version>
     <name>zamena-pinner-bot</name>
     <description>zamena-pinner-bot</description>
     <properties>
