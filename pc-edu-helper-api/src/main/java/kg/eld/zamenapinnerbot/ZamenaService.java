@@ -1,6 +1,7 @@
 package kg.eld.zamenapinnerbot;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.pinnedmessages.PinChatMessage;
@@ -13,6 +14,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ZamenaService {
 
     private final ZamenaPinnerBot bot;
@@ -20,6 +22,7 @@ public class ZamenaService {
     private final DocumentService documentService;
 
     public void processZamena(ZamenaSnapshot snapshot) {
+        log.info("Рассылаем сообщения...");
 
         Resource resource = documentService.createZamenaDocument(snapshot);
 
@@ -27,7 +30,7 @@ public class ZamenaService {
             try {
                 SendDocument sendDocument = SendDocument
                         .builder()
-                        .chatId(chat.getId())
+                        .chatId(chat.getChatId())
                         .document(new InputFile(
                                 resource.getInputStream(),
                                 snapshot.getName() + ".pdf"))
@@ -36,14 +39,14 @@ public class ZamenaService {
                 Message sentDocumentMessage = bot.execute(sendDocument);
 
                 PinChatMessage pinChatMessage = PinChatMessage.builder()
-                        .chatId(chat.getId())
+                        .chatId(chat.getChatId())
                         .messageId(sentDocumentMessage.getMessageId())
                         .build();
                 bot.execute(pinChatMessage);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (TelegramApiException e) {
-                continue;
+                log.warn(e.getMessage());
                 /*try {
                     bot.execute(SendMessage
                             .builder()

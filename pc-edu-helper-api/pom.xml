@@ -10,7 +10,7 @@
     </parent>
     <groupId>kg.eld</groupId>
     <artifactId>zamena-pinner-bot</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <name>zamena-pinner-bot</name>
     <description>zamena-pinner-bot</description>
     <properties>
@@ -20,8 +20,14 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots-spring-boot-starter</artifactId>

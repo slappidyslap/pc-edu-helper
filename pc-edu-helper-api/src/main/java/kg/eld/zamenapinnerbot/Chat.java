@@ -1,16 +1,25 @@
 package kg.eld.zamenapinnerbot;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import lombok.*;
 
-@Document("chats")
-@Data
-@AllArgsConstructor
+import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = "chatId")
+@NoArgsConstructor
 public class Chat {
 	@Id
-	@Field("id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private Long id;
+
+	@Column(name = "chat_id", nullable = false)
+	private Long chatId;
+
+	public Chat(Long chatId) {
+		this.chatId = chatId;
+	}
 }
