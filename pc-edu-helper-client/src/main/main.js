@@ -20,7 +20,7 @@ const openWindow = () => {
   win.setTitle("PC EDU Helper")
   win.removeMenu()
   if (isDevelopment) win.webContents.openDevTools();
-  /* win.maximize() */
+  win.maximize()
 
   // load HTML file
   if (isDevelopment) {

@@ -174,6 +174,7 @@ const onClickPreShowZamenaBtn = async () => {
 }
 
 const onClickChangeModeBtn = (event) => {
+    resetTimeTable(); // todo
     const weeks = Array.from(document.querySelectorAll('.weeks'))
         .map(weekEl => {
             const children = weekEl.children
@@ -203,7 +204,6 @@ const onСhangeLoadInput = (event) => {
 
         const loadedTimeTable = JSON.parse(event.target.result)
         const changeModeBtn = document.querySelector('#changeModeBtn');
-        console.log(changeModeBtn.innerText == 'В "Замена" режим')
         console.debug('Загружаем...')
         if (changeModeBtn.innerText == 'В "Замена" режим')
             loadTimeTableFromJson(loadedTimeTable)

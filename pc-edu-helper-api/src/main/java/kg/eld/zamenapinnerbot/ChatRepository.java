@@ -1,7 +1,7 @@
 package kg.eld.zamenapinnerbot;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ChatRepository extends MongoRepository<Chat, String> {}
+public interface ChatRepository extends CrudRepository<Chat, String> {}
