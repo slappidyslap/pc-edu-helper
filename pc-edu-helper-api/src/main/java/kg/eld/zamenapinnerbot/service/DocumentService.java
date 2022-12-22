@@ -1,10 +1,13 @@
-package kg.eld.zamenapinnerbot;
+package kg.eld.zamenapinnerbot.service;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import kg.eld.zamenapinnerbot.model.Lesson;
+import kg.eld.zamenapinnerbot.model.TimeTableSnapshot;
+import kg.eld.zamenapinnerbot.model.ZamenaSnapshot;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ByteArrayResource;
@@ -16,12 +19,10 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 @Service
 @Log4j2
@@ -76,9 +77,6 @@ public class DocumentService {
         return documentDecorator(snapshot.getName(), (document) -> {
 
             Map<String, Map<String, Map<String, List<Lesson>>>> json = snapshot.getData();
-//        outerTable.setBorderCollapse(BorderCollapsePropertyValue.SEPARATE);
-//        outerTable.setVerticalBorderSpacing(10);
-//        outerTable.setHorizontalBorderSpacing(10);
             PdfPTable outerTable = new PdfPTable(new float[]{1, 1});
             outerTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 

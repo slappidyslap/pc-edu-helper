@@ -320,15 +320,8 @@ const onChangeInput = (event) => {
     const target = event.target;
 
     if (target.closest("input")) {
-        // Если поле, где указывают номер аудитории, то сначала проверка на валидность
-        /* if (target.closest('.audience-field input')) {
-            if (!isValidAudience(target))
-                // target.title += `Не валидное значение`
-                // target.classList.add("error")
-                target.value = "1";
-        } */
         if (target.closest('input.subject-field')) {
-            if (target.value == 'НЕТ')
+            if (target.value.trim() == 'НЕТ')
                 setEmptyDataFields(target);
             else
                 resetDataFields(target); // todo1111

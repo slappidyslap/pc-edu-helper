@@ -1,4 +1,4 @@
-package kg.eld.zamenapinnerbot;
+package kg.eld.zamenapinnerbot.model;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @ToString
 @EqualsAndHashCode(of = "chatId")
 @NoArgsConstructor
-public class Chat {
+public class TelegramChat {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
@@ -19,7 +19,7 @@ public class Chat {
 	@Column(name = "chat_id", nullable = false)
 	private Long chatId;
 
-	public Chat(Long chatId) {
+	public TelegramChat(Long chatId) {
 		this.chatId = chatId;
 	}
 }

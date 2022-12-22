@@ -86,9 +86,9 @@ export function setEmptyDataFields(element) {
     element.style.borderLeft = '1px solid #c04f4f69'
 }
 export function resetDataFields(element) {
-    const children = element.parentElement.parentElement.children
+    const children = element.parentElement.children
     for (let child of children) {
-        child.firstElementChild.style.border = '1px solid #c04f4f69'
+        child.style.border = '1px solid #c04f4f69'
     }
 }
 

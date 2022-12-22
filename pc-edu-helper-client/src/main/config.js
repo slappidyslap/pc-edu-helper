@@ -32,7 +32,7 @@ export function configure(window) {
     const configAsJson = JSON.parse(readFileSync(configFile));
     process.env['API_URL'] = configAsJson.apiUrl;
 
-    window.webContents.on('dom-ready', () => {
+    window.webContents.once('dom-ready', () => {
         window.webContents.send('datalist',
             { teachers: configAsJson.teachers, subjects: configAsJson.subjects }
         )

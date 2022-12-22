@@ -1,4 +1,4 @@
-package kg.eld.zamenapinnerbot;
+package kg.eld.zamenapinnerbot.model;
 
 import lombok.AccessLevel;
 import lombok.Data;

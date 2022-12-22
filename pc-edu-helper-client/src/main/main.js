@@ -11,7 +11,6 @@ const openWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      // preload: join(__dirname, 'preload.js')
     },
   });
   // Это какой-то костыль, portable версия не запускается иначе
@@ -22,26 +21,27 @@ const openWindow = () => {
   window.maximize()
 
   // load HTML file
-  if (isDevelopment) {
+  if (isDevelopment)
     window.loadURL(`http://${process.env.ELECTRON_WEBPACK_WDS_HOST}:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
-  } else {
+  else
     window.loadFile(resolve(__dirname, 'index.html'));
-  }
 };
 
-ipcMain.on('new-datalist', (evt, data) => {
+ipcMain.once('new-datalist', (evt, data) => {
+  console.log(data);
   configureDatalist(data);
 })
 
 // when app is ready, open a window
 app.on('ready', () => {
-  openWindow();
+  openWindow()
   configure(window);
 });
 
 // when all windows are closed, quit the app
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    ipcMain.removeAllListeners();
     app.quit();
   }
 });

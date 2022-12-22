@@ -1,5 +1,7 @@
-package kg.eld.zamenapinnerbot;
+package kg.eld.zamenapinnerbot.controller;
 
+import kg.eld.zamenapinnerbot.service.ZamenaService;
+import kg.eld.zamenapinnerbot.model.ZamenaSnapshot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,21 +9,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.objects.Update;
 
 @RestController
 @CrossOrigin(originPatterns = "*")
 @RequiredArgsConstructor
 public class TelegramController {
 
-	private final ZamenaPinnerBot bot;
 	private final ZamenaService zamenaService;
-
-	@PostMapping
-	BotApiMethod<?> onUpdateReceived(@RequestBody Update update) {
-		return bot.onWebhookUpdateReceived(update);
-	}
 
 	@PostMapping("/zamena")
 	ResponseEntity<String> onZamenaReceived(
