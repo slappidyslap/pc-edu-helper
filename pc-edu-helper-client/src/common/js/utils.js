@@ -1,16 +1,11 @@
-import { groupsDiv } from "./singletons"
-import { Toast, Modal } from 'bootstrap'
+import { Modal } from 'bootstrap'
 
 const FAIL_LOAD_TIME_TABLE = 'Вы пытаетесь загрузить замену'
 const FAIL_LOAD_ZAMENA = 'Вы пытаетесь загрузить расписание'
+const groupsDiv = document.querySelector(".groups");
 
 export function isTodayAfterOrEqualsSeptember() {
     return new Date().getMonth() > 9
-}
-
-export function repeat(n, func) {
-    for (let i = 0; i < n; i++)
-        func(i)
 }
 
 export function getYearByGroupName(groupName) {
@@ -38,9 +33,9 @@ export function getGroupTemplate(groupName) {
 export function getDataInputsTemplate(isNew) {
     return `
         <div class="data-inputs" data-id="${isNew ? 1 : 0}">
-            <input type="text" list="subjects" class="subject-field"/>
+            <input type="text" list="datalistSubjects" class="subject-field"/>
             <input type="text" list="to-variants" class="to-field"/>
-            <input type="text" list="teachers" class="teacher-field"/>
+            <input type="text" list="datalistTeachers" class="teacher-field"/>
             <input type="text" class="audience-field"/>
         </div>
         `
@@ -77,11 +72,11 @@ export function getTimeTableItemTemplate(lessonNum) {
         `
 }
 
-export function isValidAudience(audienceField) {
+/* export function isValidAudience(audienceField) {
     return audienceField.value == "" ||
         audienceField.value in [...Array(64).keys()] ||
         audienceField.value.match(REGEX_VALID_SPECIFIC_AUDIENCE)
-}
+} */
 
 export function setEmptyDataFields(element) {
     const children = element.parentElement.children
@@ -91,9 +86,9 @@ export function setEmptyDataFields(element) {
     element.style.borderLeft = '1px solid #c04f4f69'
 }
 export function resetDataFields(element) {
-    const children = element.parentElement.parentElement.children
+    const children = element.parentElement.children
     for (let child of children) {
-        child.firstElementChild.style.border = '1px solid #c04f4f69'
+        child.style.border = '1px solid #c04f4f69'
     }
 }
 

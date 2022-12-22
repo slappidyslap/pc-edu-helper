@@ -1,13 +1,12 @@
 import { 
     isTodayAfterOrEqualsSeptember, 
-    repeat, 
     getGroupTemplate, 
     getTimeTableListTemplate, 
     getWeekNameByNum, 
     getTimeTableItemTemplate,
 } from './utils'
-import { groupsDiv } from './singletons'
 
+const groupsDiv = document.querySelector(".groups");
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 export function fill() {

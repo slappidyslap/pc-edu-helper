@@ -1,5 +1,8 @@
-package kg.eld.zamenapinnerbot;
+package kg.eld.zamenapinnerbot.controller;
 
+import kg.eld.zamenapinnerbot.service.DocumentService;
+import kg.eld.zamenapinnerbot.model.TimeTableSnapshot;
+import kg.eld.zamenapinnerbot.model.ZamenaSnapshot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;

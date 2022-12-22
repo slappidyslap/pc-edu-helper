@@ -1,52 +1,47 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { join, resolve } from 'path';
-import { homedir } from 'os'
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { configure, configureDatalist } from './config';
 
 // get environment type
 const isDevelopment = process.env.NODE_ENV !== 'production';
-const DEFAULT_API_URL = 'https://pc-edu-helper-api.onrender.com';
-
+let window;
 // open a window
 const openWindow = () => {
-  const win = new BrowserWindow({
+  window = new BrowserWindow({
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
     },
   });
   // Это какой-то костыль, portable версия не запускается иначе
-  if (isDevelopment) win.setIcon(join(__dirname, '..', 'static', 'icon.ico'));
-  win.setTitle("PC EDU Helper")
-  win.removeMenu()
-  if (isDevelopment) win.webContents.openDevTools();
-  win.maximize()
+  if (isDevelopment) window.setIcon(join(__dirname, '..', 'static', 'icon.ico'));
+  window.setTitle("PC EDU Helper")
+  window.removeMenu()
+  if (isDevelopment) window.webContents.openDevTools();
+  window.maximize()
 
   // load HTML file
-  if (isDevelopment) {
-    win.loadURL(`http://${process.env.ELECTRON_WEBPACK_WDS_HOST}:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
-  } else {
-    win.loadFile(resolve(__dirname, 'index.html'));
-  }
+  if (isDevelopment)
+    window.loadURL(`http://${process.env.ELECTRON_WEBPACK_WDS_HOST}:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
+  else
+    window.loadFile(resolve(__dirname, 'index.html'));
 };
 
-const configure = () => {
-  const configFile = join(homedir(), '.pceduhelper')
-  if (!existsSync(configFile))
-    writeFileSync(configFile, DEFAULT_API_URL)
-  const API_URL = readFileSync(configFile);
-  process.env['API_URL'] = API_URL;
-}
+ipcMain.once('new-datalist', (evt, data) => {
+  console.log(data);
+  configureDatalist(data);
+})
 
 // when app is ready, open a window
 app.on('ready', () => {
-  configure();
-  openWindow();
+  openWindow()
+  configure(window);
 });
 
 // when all windows are closed, quit the app
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    ipcMain.removeAllListeners();
     app.quit();
   }
 });

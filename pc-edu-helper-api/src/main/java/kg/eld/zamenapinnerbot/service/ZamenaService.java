@@ -1,5 +1,9 @@
-package kg.eld.zamenapinnerbot;
+package kg.eld.zamenapinnerbot.service;
 
+import kg.eld.zamenapinnerbot.model.TelegramChat;
+import kg.eld.zamenapinnerbot.ZamenaPinnerBot;
+import kg.eld.zamenapinnerbot.model.ZamenaSnapshot;
+import kg.eld.zamenapinnerbot.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.Resource;
@@ -26,7 +30,7 @@ public class ZamenaService {
 
         Resource resource = documentService.createZamenaDocument(snapshot);
 
-        for (Chat chat : chatRepository.findAll()) {
+        for (TelegramChat chat : chatRepository.findAll()) {
             try {
                 SendDocument sendDocument = SendDocument
                         .builder()

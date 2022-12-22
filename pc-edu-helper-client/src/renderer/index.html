@@ -7,25 +7,10 @@
 </head>
 
 <body>
-    <datalist id="subjects">
-        <option value="Математика" />
-        <option value="КСЕ" />
-        <option value="ОСС" />
-        <option value="Комп. графика" />
-        <option value="Русский язык" />
-        <option value="Кырг. язык" />
-        <option value="Кырг.язык и лит-ра" />
+    <datalist id="datalistSubjects">
         <option value="НЕТ" />
     </datalist>
-    <datalist id="teachers">
-        <option value="Усупова Г.У." />
-        <option value="Эсентурова А.Ж." />
-        <option value="Абдрахманова Д.Д." />
-        <option value="Иманалиев Т.И." />
-        <option value="Молдошова Г.М." />
-        <option value="Бубнева В.Б." />
-        <option value="Искендерова С.И." />
-        <option value="НЕТ" />
+    <datalist id="datalistTeachers">
     </datalist>
     <datalist id="to-variants">
         <option value="1 пд">
@@ -63,7 +48,9 @@
                     Опции
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#" id="preShowZamenaBtn">Предварительный просмотр замены</a></li>
+                    <li><a class="dropdown-item" href="#" id="preShowZamenaBtn">Пред. просмотр замены</a></li>
+                    <li><a class="dropdown-item" href="#" id="configureHintsBtn" data-bs-toggle="modal"
+                            data-bs-target="#configureHintsModal">Настройка подсказок</a></li>
                     <li><a class="dropdown-item" href="#" id="generateAnalyzeBtn" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">Провести анализ</a></li>
                     </li>
@@ -135,6 +122,30 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" id="sendServerErrorBtn">Отправить репорт</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="configureHintsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="configureHintsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="configureHintsModalLabel">Настройка подсказок</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-around">
+                    <div class="d-flex flex-column gap-2" data-col="0">
+
+                        <button type="button" class="btn btn-danger btn-sm">Добавить</button>
+                    </div>
+                    <div class="d-flex flex-column gap-2" data-col="1">
+
+                        <button type="button" class="btn btn-danger btn-sm">Добавить</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="saveHintsBtn" data-bs-dismiss="modal">Сохранить</button>
                 </div>
             </div>
         </div>

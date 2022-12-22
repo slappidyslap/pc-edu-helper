@@ -29,10 +29,16 @@ import {
     isClientOrServerError,
 } from "./utils"
 
-import { groupsDiv, allAudienceInputs, allTeacherInputs } from "./singletons"
-
 const IF_EXISTS_ERROR_TEXT = 'Исправьте ошибки';
 const API_URL = process.env['API_URL'];
+const groupsDiv = document.querySelector(".groups");
+let allTeacherInputs;
+let allAudienceInputs;
+
+document.addEventListener('DOMContentLoaded', () => {
+    allTeacherInputs = new Set(document.querySelectorAll(".teacher-field"));
+    allAudienceInputs = new Set(document.querySelectorAll(".audience-field"));
+})
 
 export function registerMainListeners() {
     groupsDiv.addEventListener("change", onChangeInput)
@@ -50,7 +56,6 @@ export function registerMainListeners() {
         else if (target.closest('#preShowZamenaBtn')) onClickPreShowZamenaBtn()
         else if (event.altKey) {
             if (target.closest('#exportTimeTableBtn')) onClickExportTimeTableBtn()
-            else if (target.closest('#exportTimeTableBtn')) onClickExportTimeTableBtn()
             else if (target.closest('#exportZamenaBtn')) onClickExportZamenaBtn()
             else if (target.closest('#changeModeBtn')) onClickChangeModeBtn(event)
         }
@@ -101,7 +106,6 @@ const onClickExportTimeTableBtn = async () => {
     let serverErrorsString = '';
     [0, 1, 2].forEach(async (i) => {
 
-        showToast(`Загрузка ${i + 1} - курса...`, true);
         const groupData = Object.fromEntries(
             Object.entries(data).filter(([key]) => {
                 const groupYear = getYearByGroupName(key)
@@ -316,18 +320,11 @@ const onChangeInput = (event) => {
     const target = event.target;
 
     if (target.closest("input")) {
-        // Если поле, где указывают номер аудитории, то сначала проверка на валидность
-        if (target.closest('.audience-field input')) {
-            if (!isValidAudience(target))
-                // target.title += `Не валидное значение`
-                // target.classList.add("error")
-                target.value = "1";
-        }
-        else if (target.closest('input.subject-field')) {
-            if (target.value == 'НЕТ')
+        if (target.closest('input.subject-field')) {
+            if (target.value.trim() == 'НЕТ')
                 setEmptyDataFields(target);
             else
-                resetDataFields(target);
+                resetDataFields(target); // todo1111
         }
         const lessonNum = getLessonNumByElement(target);
         const weekName = getWeekNameByInput(target);

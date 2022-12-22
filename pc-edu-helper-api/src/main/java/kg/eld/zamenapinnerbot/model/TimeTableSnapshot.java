@@ -1,4 +1,4 @@
-package kg.eld.zamenapinnerbot;
+package kg.eld.zamenapinnerbot.model;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ZamenaSnapshot {
+public class TimeTableSnapshot {
     String name;
-    Map<String, Map<String, List<Lesson>>> data;
+    Map<String, Map<String, Map<String, List<Lesson>>>> data;
 }

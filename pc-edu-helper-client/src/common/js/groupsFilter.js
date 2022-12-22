@@ -1,4 +1,3 @@
-import { groupsDiv } from "./singletons"
 import { isTodayAfterOrEqualsSeptember } from "./utils"
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -6,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#groupYear').value = '-1'
 })
 
+const groupsDiv = document.querySelector(".groups");
 let filterGroupName = '.+'
 let filterGroupYear = '-1'
 

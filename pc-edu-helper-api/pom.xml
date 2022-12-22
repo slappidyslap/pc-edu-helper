@@ -10,7 +10,7 @@
     </parent>
     <groupId>kg.musabaev</groupId>
     <artifactId>zamena-pinner-bot</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <name>zamena-pinner-bot</name>
     <description>zamena-pinner-bot</description>
     <properties>
