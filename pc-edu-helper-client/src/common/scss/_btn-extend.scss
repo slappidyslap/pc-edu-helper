@@ -1,0 +1,33 @@
+.btn-add-data-inputs1 {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    font-family: Consolas, monaco, monospace;
+}
+
+.btn-add-data-inputs1:before {
+    content: attr(lessonNum);
+}
+
+.btn-add-data-inputs1:hover::before {
+    content: "+";
+}
+
+.btn-add-data-inputs2 {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    font-family: Consolas, monaco, monospace;
+}
+
+.btn-add-data-inputs2:before {
+    content: attr(lessonnum);
+}
+
+.btn-add-data-inputs2:hover::before {
+    content: "-";
+}

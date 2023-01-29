@@ -1,0 +1,39 @@
+{
+  "name": "pc-edu-helper",
+  "main": "main.js",
+  "license": "MIT",
+  "version": "1.0.3",
+  "scripts": {
+    "serve": "electron-webpack dev",
+    "build": "electron-webpack && electron-builder"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.3",
+    "electron": "^11.0.0",
+    "electron-builder": "^22.4.1",
+    "electron-webpack": "^2.8.2",
+    "node-sass": "^7.0.0",
+    "sass-loader": "^10",
+    "webpack": "^4.44.2"
+  },
+  "dependencies": {
+    "source-map-support": "^0.5.21"
+  },
+  "electronWebpack": {
+    "renderer": {
+      "template": "src/renderer/index.html"
+    }
+  },
+  "build": {
+    "appId": "kg.musabaev",
+    "productName": "pc edu helper",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "src/static/icon.ico"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+telegram:
+  bot-name: ${BOT_NAME}
+  bot-token: ${BOT_TOKEN}
+  bot-username: ${BOT_USERNAME}
+
+server:
+  port: ${SERVER_PORT}
+  error:
+    include-message: always
+spring:
+  datasource:
+    url: ${H2_URL}
+    password: ${H2_PASSWORD}
+    username: ${H2_USERNAME}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      settings:
+        web-allow-others: true

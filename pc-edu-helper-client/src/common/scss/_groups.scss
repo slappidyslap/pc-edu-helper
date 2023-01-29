@@ -1,0 +1,104 @@
+@import 'btn-extend';
+
+$border-color-bright: rgb(192, 79, 79);
+$border-color-dark: rgba(192, 79, 79, 0.411);
+$error-color: hotpink;
+
+
+.groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.weeks {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.weeks .week-time-table:last-child {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.group__name {
+    text-align: center;
+    font-weight: 600;
+    border: 2px solid $border-color-bright;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.week-time-table {
+    display: flex;
+    border: 1px solid $border-color-bright;
+}
+
+.week {
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+    text-align: center;
+    font-weight: bold;
+    width: 30px;
+    border: 1px solid $border-color-bright;
+}
+
+.time-table__item {
+    display: flex;
+}
+
+.black {
+    background-color: rgba(0, 0, 0, 0.205);
+}
+
+.time-table__item-num {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $border-color-dark;
+    border-top: 1px solid $border-color-dark;
+    padding: 0 10px;
+}
+
+.time-table__item-num button {
+    font-weight: bold;
+}
+
+.data-inputs {
+    display: flex;
+}
+
+input {
+    transition: border-color 0.30s ease-in-out, box-shadow 0.30s ease-in-out;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background: none;
+    border: 1px solid $border-color-dark;
+}
+
+input:focus {
+    outline: 0;
+    box-shadow: 0 0 0.5rem rgba(172, 23, 23, 0.671);
+    border-color: rgba(255, 0, 0, 0.479);
+}
+
+.subject-field {
+    width: 170px;
+}
+
+
+.to-field {
+    width: 45px;
+}
+
+.audience-field {
+    width: 50px;
+}
+
+.error-input {
+    text-decoration: $error-color wavy underline;
+}

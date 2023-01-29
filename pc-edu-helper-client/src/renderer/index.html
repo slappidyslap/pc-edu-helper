@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+</head>
+
+<body>
+    <datalist id="datalistSubjects">
+        <option value="НЕТ" />
+    </datalist>
+    <datalist id="datalistTeachers">
+    </datalist>
+    <datalist id="to-variants">
+        <option value="1 пд">
+        <option value="2 пд">
+        <option value="лк">
+    </datalist>
+    <nav class="navbar navbar-light sticky-top bg-light">
+        <div class="container d-flex justify-content-center gap-3">
+            <div id="filters" class="d-flex justify-content-center gap-3">
+                <div>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="groupYear">
+                        <option selected value="-1">Все</option>
+                        <option value="0">1 курс</option>
+                        <option value="1">2 курс</option>
+                        <option value="2">3 курс</option>
+                    </select>
+                </div>
+                <div>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="groupName">
+                        <option selected value=".+">Все</option>
+                        <option value="ПКС">ПКС</option>
+                        <option value="КС">КС</option>
+                        <option value="ЭССС">ЭССС</option>
+                        <option value="ЭкСС">ЭкСС</option>
+                        <option value="СССК">СССК</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <input class="form-control form-select-sm" type="date" id="setDateZamenaInput">
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Опции
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" id="preShowZamenaBtn">Пред. просмотр замены</a></li>
+                    <li><a class="dropdown-item" href="#" id="configureHintsBtn" data-bs-toggle="modal"
+                            data-bs-target="#configureHintsModal">Настройка подсказок</a></li>
+                    <li><a class="dropdown-item" href="#" id="generateAnalyzeBtn" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">Провести анализ</a></li>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#" id="saveBtn">Сохранить</a></li>
+                    <li><a class="dropdown-item" href="#">
+                            <label>
+                                <input type="file" id="loadInput" style="display: none;" accept="application/json">
+                                <span>Загрузить</span>
+                            </label>
+                        </a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#" id="changeModeBtn" title="Alt + ЛКМ">В "Замена" режим</a></li>
+                    <li><a class="dropdown-item" href="#" id="exportTimeTableBtn" title="Alt + ЛКМ">Экспорт
+                            расписания</a></li>
+                    <li><a class="dropdown-item" href="#" id="exportZamenaBtn" title="Alt + ЛКМ">Экспорт замены</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Анализ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="analyzeModalContent">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="groups">
+
+        </div>
+    </div>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999">
+        <div class="toast align-items-center fade" id="mainToast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex justify-content-between">
+                <div class="toast-body d-flex" style="font-size: 1.1rem">
+                    <div class="spinner-border text-danger me-2 d-none" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div id="mainToastContent">
+
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-xl fade" id="serverErrorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ошибка!</h5>
+                </div>
+                <div class="modal-body" id="serverErrorModalContent">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="configureHintsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="configureHintsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="configureHintsModalLabel">Настройка подсказок</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-around">
+                    <div class="d-flex flex-column gap-2" data-col="0">
+
+                        <button type="button" class="btn btn-danger btn-sm">Добавить</button>
+                    </div>
+                    <div class="d-flex flex-column gap-2" data-col="1">
+
+                        <button type="button" class="btn btn-danger btn-sm">Добавить</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="saveHintsBtn" data-bs-dismiss="modal">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+</html>
